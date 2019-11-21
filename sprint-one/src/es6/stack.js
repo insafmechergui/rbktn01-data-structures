@@ -9,8 +9,8 @@ class Stack {
   }
 
   push(value) {
-     this.storage[this.key] = value;
      this.key++;
+     this.storage[this.key] = value;
 
   }
 
@@ -19,11 +19,10 @@ class Stack {
         return undefined;
       }
 
+    var result  = this.storage[this.key]
+    delete this.storage[this.key];
     this.key--;
-    var result = this.storage[this.key];
-    delete result;
-    
-    return this.storage[this.key];
+    return result ;
 
   }
 
@@ -34,4 +33,3 @@ size() {
 
 }
 
-var stackExemple = new Stack();
