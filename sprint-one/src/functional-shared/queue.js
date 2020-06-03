@@ -3,33 +3,37 @@ var Queue = function() {
   // but try not not reference your old code in writing the new style.
   var someInstance = {};
 
-
-  someInstance.storage = {}
-  someInstance.start = 0
-  someInstance.end=0
-
-  _(someInstance).extend(queueMethods)
-
-  return someInstance
+  someInstance._storage={};
+  someInstance._start = 0;
+  someInstance._end = 0;
+  
+  extend(someInstance, queueMethods);
+  
+  return someInstance;
 
 };
+
+var extend = function(to, from) {
+  for (var key in from) {
+    to[key] = from[key];
+  }
+}
 
 var queueMethods = {};
 
   queueMethods.enqueue = function(value) {
-    this.storage[this.end] = value;
-     this.end++;
+    this._storage[this._end] = value
+    this._end++
   };
 
   queueMethods.dequeue = function() {
+    var result = this._storage[this._start]
+    delete this._storage[this._start]
+    this.size() && this._start++
+    return result
 
-    var result = this.storage[this.start];
-    delete this.storage[this.start];
-    this.size() && this.start++
-    return result;
   };
 
   queueMethods.size = function() {
-  	return this.end - this.start ;
+    return this._end - this._start
   };
-
